@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Admin Dashboard</title>
+
+<style>
+body{
+margin:0;
+font-family:Poppins,sans-serif;
+background:#0b1220;
+color:white;
+}
+
+header{
+background:#111c44;
+padding:18px;
+display:flex;
+justify-content:space-between;
+align-items:center;
+}
+
+.btn{
+background:#ef4444;
+color:white;
+border:none;
+padding:8px 12px;
+border-radius:8px;
+cursor:pointer;
+}
+
+.container{
+width:90%;
+margin:auto;
+margin-top:30px;
+}
+
+/* Stats Grid */
+.grid{
+display:grid;
+grid-template-columns:repeat(4,1fr);
+gap:18px;
+}
+
+.card{
+background:rgba(255,255,255,0.08);
+border-radius:14px;
+padding:20px;
+backdrop-filter:blur(8px);
+border:1px solid rgba(255,255,255,0.2);
+transition:.3s;
+}
+.card:hover{transform:translateY(-4px)}
+
+.card h2{
+font-size:32px;
+margin:10px 0;
+}
+
+/* Department list */
+.dept-list{
+margin-top:20px;
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(180px,1fr));
+gap:12px;
+}
+
+.dept{
+background:rgba(255,255,255,.06);
+padding:12px;
+border-radius:12px;
+font-size:14px;
+border:1px solid rgba(255,255,255,.2);
+}
+</style>
+</head>
+
+<body>
+
+<header>
+<h2>Campus Guardian — Admin Dashboard</h2>
+<button class="btn" onclick="logout()">Logout</button>
+</header>
+
+<div class="container">
+
+<h2>System Status</h2>
+
+<div class="grid">
+<div class="card">
+<p>Total Complaints</p>
+<h2 id="total">0</h2>
+</div>
+
+<div class="card">
+<p>Pending</p>
+<h2 id="pending">0</h2>
+</div>
+
+<div class="card">
+<p>In-Progress</p>
+<h2 id="progress">0</h2>
+</div>
+
+<div class="card">
+<p>Resolved</p>
+<h2 id="resolved">0</h2>
+</div>
+</div>
+
+<h3 style="margin-top:28px;">Department Overview</h3>
+<div class="dept-list" id="deptStats"></div>
+
+</div>
+
+<script>
+const BASE = "http://localhost:8080/api/complaints";
+
+function loadStats(){
+
+fetch(BASE)
+.then(res=>res.json())
+.then(data=>{
+
+document.getElementById("total").innerText = data.length;
+document.getElementById("pending").innerText = data.filter(c=>c.status==="Pending").length;
+document.getElementById("progress").innerText = data.filter(c=>c.status==="In-Progress").length;
+document.getElementById("resolved").innerText = data.filter(c=>c.status==="Resolved").length;
+
+// ---- Department counts ----
+const map = {};
+data.forEach(c=>{
+  const name = c.departmentName || "Unassigned";
+  map[name] = (map[name] || 0) + 1;
+});
+
+const box = document.getElementById("deptStats");
+box.innerHTML="";
+Object.keys(map).forEach(d=>{
+  box.innerHTML += `<div class="dept">${d} — ${map[d]}</div>`;
+});
+
+});
+}
+
+function logout(){
+window.location.href="../index.html";
+}
+
+loadStats();
+</script>
+
+</body>
+</html>

@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Track Complaints | Campus Guardian</title>
+  <link rel="stylesheet" href="../css/style.css">
+</head>
+<body>
+
+<div class="glow g1"></div>
+<div class="glow g2"></div>
+
+<div class="layout">
+  <div class="side">
+    <div class="side-title">Student</div>
+    <div class="side-link" onclick="goDashboard()">Dashboard</div>
+    <div class="side-link" onclick="goSubmit()">Submit Complaint</div>
+    <div class="side-link active" onclick="goTrack()">Track Complaints</div>
+    <div class="side-link" onclick="userLogout()">Logout</div>
+  </div>
+
+  <div class="main">
+    <div class="main-header">
+      <div>
+        <div style="font-size:13px;color:#9CA3AF;">Track</div>
+        <div style="font-size:16px;font-weight:600;">Your Complaints</div>
+      </div>
+      <div class="badge">Live Status</div>
+    </div>
+
+    <div class="card">
+      <div class="form-grid">
+        <input id="trackEmail" type="email" placeholder="Your Email" />
+        <input id="trackId" type="text" placeholder="Complaint ID (optional)" />
+      </div>
+      <button class="btn btn-primary" style="margin-top:10px;" onclick="trackComplaintsStudent()">Track</button>
+      <div id="trackMsg" class="msg"></div>
+    </div>
+
+    <div style="margin-top:14px;font-size:14px;font-weight:600;">Results</div>
+    <div id="trackResults" class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>Message</th>
+            <th>Status</th>
+            <th>Priority</th>
+            <th>Updated</th>
+          </tr>
+        </thead>
+        <tbody id="trackBody">
+          <tr><td colspan="5">No data yet</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<script src="../js/auth-user.js"></script>
+<script src="../js/user-complaints.js"></script>
+<script>
+requireUser();
+document.getElementById("trackEmail").value = getUserEmail() || "";
+
+function goDashboard(){window.location.href="dashboard.html";}
+function goSubmit(){window.location.href="submit.html";}
+function goTrack(){window.location.href="track.html";}
+</script>
+</body>
+</html>

@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Student Dashboard | Campus Guardian</title>
+  <link rel="stylesheet" href="../css/style.css">
+</head>
+<body>
+
+<div class="glow g1"></div>
+<div class="glow g2"></div>
+
+<div class="layout">
+  <div class="side">
+    <div class="side-title">Student</div>
+    <div class="side-link active" onclick="goDashboard()">Dashboard</div>
+    <div class="side-link" onclick="goSubmit()">Submit Complaint</div>
+    <div class="side-link" onclick="goTrack()">Track Complaints</div>
+    <div class="side-link" onclick="userLogout()">Logout</div>
+  </div>
+
+  <div class="main">
+    <div class="main-header">
+      <div>
+        <div style="font-size:13px;color:#9CA3AF;">Welcome</div>
+        <div id="userEmail" style="font-size:16px;font-weight:600;"></div>
+      </div>
+      <div class="badge">Student Portal</div>
+    </div>
+
+    <div class="card-grid">
+      <div class="card">
+        <h3>My Complaints</h3>
+        <p id="countTotal">Total: –</p>
+      </div>
+      <div class="card">
+        <h3>In Progress</h3>
+        <p id="countProgress">–</p>
+      </div>
+      <div class="card">
+        <h3>Resolved</h3>
+        <p id="countResolved">–</p>
+      </div>
+      <div class="card">
+        <h3>Quick Start</h3>
+        <p>Click "Submit Complaint" in sidebar to raise a new issue.</p>
+      </div>
+    </div>
+
+    <div style="margin-top:20px;font-size:14px;font-weight:600;">
+      Recent Complaints
+    </div>
+
+    <div class="table-wrap" id="recentWrap">
+      <table>
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>Department</th>
+            <th>Message</th>
+            <th>Status</th>
+            <th>Priority</th>
+          </tr>
+        </thead>
+        <tbody id="recentBody">
+          <tr><td colspan="5">Loading…</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+  </div>
+</div>
+
+<script src="../js/auth-user.js"></script>
+<script src="../js/user-complaints.js"></script>
+<script>
+requireUser();
+
+document.getElementById("userEmail").innerText = getUserEmail();
+
+// FIRST LOAD
+loadStudentOverview();
+
+// 🔥 SECOND LOAD AFTER SHORT DELAY (Firestore sync fix)
+setTimeout(() => {
+  loadStudentOverview();
+}, 800);
+
+function goDashboard(){window.location.href="dashboard.html";}
+function goSubmit(){window.location.href="submit.html";}
+function goTrack(){window.location.href="track.html";}
+</script>
+</body>
+</html>

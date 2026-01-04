@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Admin - Complaints</title>
+
+<style>
+body{
+  margin:0;
+  font-family:Poppins,sans-serif;
+  background:#0b1220;
+  color:white;
+}
+
+header{
+  padding:20px;
+  background:#111c44;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+}
+
+.container{
+  width:95%;
+  margin:auto;
+  margin-top:20px;
+}
+
+.panel{
+  display:flex;
+  gap:10px;
+  flex-wrap:wrap;
+  margin-bottom:15px;
+}
+
+.panel input,.panel select{
+  padding:8px;
+  border-radius:8px;
+  border:none;
+  background:#1f2937;
+  color:white;
+}
+
+table{
+  width:100%;
+  border-collapse:collapse;
+  background:rgba(255,255,255,.05);
+  backdrop-filter:blur(10px);
+  border-radius:12px;
+  overflow:hidden;
+}
+
+th,td{
+  padding:12px;
+  border-bottom:1px solid rgba(255,255,255,.2);
+}
+
+button{
+  padding:6px 10px;
+  border-radius:8px;
+  border:none;
+  cursor:pointer;
+}
+
+.update{ background:#3b82f6; color:white;}
+.delete{ background:#ef4444; color:white;}
+
+select{
+  padding:6px;
+  border-radius:6px;
+  background:#1f2937;
+  color:white;
+  border:none;
+}
+</style>
+</head>
+
+<body>
+
+<header>
+<h2>Campus Guardian - Admin Panel</h2>
+<button onclick="logout()" style="background:#ef4444;color:white;padding:8px 12px;border-radius:8px;">
+Logout
+</button>
+</header>
+
+<div class="container">
+
+<h2>All Complaints</h2>
+
+<div class="panel">
+  <input id="search" placeholder="Search by ID / Email / Message" oninput="applyFilters()">
+
+  <select id="filterStatus" onchange="applyFilters()">
+    <option value="">Filter Status</option>
+    <option>Pending</option>
+    <option>In-Progress</option>
+    <option>Resolved</option>
+  </select>
+
+  <select id="filterPriority" onchange="applyFilters()">
+    <option value="">Filter Priority</option>
+    <option>Normal</option>
+    <option>High</option>
+    <option>Emergency</option>
+  </select>
+</div>
+
+<table>
+<thead>
+<tr>
+  <th>ID</th>
+  <th>Email</th>
+  <th>Department</th>
+  <th>Message</th>
+  <th>Status</th>
+  <th>Priority</th>
+  <th>Delete</th>
+</tr>
+</thead>
+<tbody id="body"></tbody>
+</table>
+
+</div>
+
+<script>
+const BASE = "http://localhost:8080/api/complaints";
+let allComplaints = [];
+
+function loadComplaints(){
+  fetch(BASE)
+    .then(res=>res.json())
+    .then(data=>{
+      if(!Array.isArray(data)) data=[];
+      allComplaints = data;
+      renderTable(data);
+    });
+}
+
+function renderTable(list){
+  const body=document.getElementById("body");
+  body.innerHTML="";
+
+  list.forEach(c=>{
+    body.innerHTML += `
+      <tr>
+        <td>${c.id}</td>
+        <td>${c.email || "-"}</td>
+        <td>${c.departmentName || "-"}</td>
+        <td>${c.message || "-"}</td>
+
+        <td>
+          <select id="s-${c.id}">
+            <option ${c.status==="Pending"?"selected":""}>Pending</option>
+            <option ${c.status==="In-Progress"?"selected":""}>In-Progress</option>
+            <option ${c.status==="Resolved"?"selected":""}>Resolved</option>
+          </select>
+          <button class="update" onclick="updateStatus('${c.id}')">Update</button>
+        </td>
+
+        <td>
+          <select id="p-${c.id}">
+            <option ${c.priority==="Normal"?"selected":""}>Normal</option>
+            <option ${c.priority==="High"?"selected":""}>High</option>
+            <option ${c.priority==="Emergency"?"selected":""}>Emergency</option>
+          </select>
+          <button class="update" onclick="updatePriority('${c.id}')">Save</button>
+        </td>
+
+        <td>
+          <button class="delete" onclick="deleteComplaint('${c.id}')">Delete</button>
+        </td>
+      </tr>
+    `;
+  });
+}
+
+function updateStatus(id){
+  const status=document.getElementById("s-"+id).value;
+  fetch(`${BASE}/${id}?status=${encodeURIComponent(status)}`,{method:"PUT"})
+    .then(res=>res.ok && loadComplaints());
+}
+
+function updatePriority(id){
+  const priority=document.getElementById("p-"+id).value;
+  fetch(`${BASE}/${id}/priority?priority=${encodeURIComponent(priority)}`,{method:"PUT"})
+    .then(res=>res.ok && loadComplaints());
+}
+
+function deleteComplaint(id){
+  if(!confirm("Delete this complaint?")) return;
+  fetch(`${BASE}/${id}`,{method:"DELETE"})
+    .then(res=>res.ok && loadComplaints());
+}
+
+function applyFilters(){
+  const s  = document.getElementById("search").value.toLowerCase();
+  const fs = document.getElementById("filterStatus").value;
+  const fp = document.getElementById("filterPriority").value;
+
+  renderTable(
+    allComplaints.filter(c=>{
+      return (
+        (c.id||"").toLowerCase().includes(s) ||
+        (c.email||"").toLowerCase().includes(s) ||
+        (c.message||"").toLowerCase().includes(s)
+      )
+      && (fs==="" || c.status===fs)
+      && (fp==="" || c.priority===fp);
+    })
+  );
+}
+
+function logout(){
+  window.location.href="../index.html";
+}
+
+loadComplaints();
+</script>
+
+</body>
+</html>

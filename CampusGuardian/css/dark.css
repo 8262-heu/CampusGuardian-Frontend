@@ -1,0 +1,8 @@
+body.dark {
+  --bg-main: #05070f;
+  --bg-soft: #0b1020;
+  --card-bg: rgba(255,255,255,0.06);
+  --border: rgba(255,255,255,0.12);
+  --text-main: #f3f4f6;
+  --text-muted: #9ca3af;
+}

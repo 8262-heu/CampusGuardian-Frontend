@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Student Login | Campus Guardian</title>
+  <link rel="stylesheet" href="../css/style.css">
+</head>
+<body class="auth-body">
+
+<div class="glow g1"></div>
+<div class="glow g2"></div>
+
+<div class="auth-box">
+  <h2>Student Login</h2>
+  <div class="auth-sub">Access your complaint dashboard</div>
+
+  <input id="loginEmail" type="email" placeholder="College Email">
+  <input id="loginPass" type="password" placeholder="Password">
+
+  <button class="btn btn-primary" onclick="doLogin()">Login</button>
+
+  <div id="msg" class="msg"></div>
+
+  <div class="auth-text">
+    Don’t have an account?
+    <span class="link" onclick="window.location.href='signup.html'">Signup</span>
+  </div>
+
+  <div class="auth-text">
+    <span class="link" onclick="window.location.href='../index.html'">⬅ Back to Home</span>
+  </div>
+</div>
+
+<script src="../js/auth-user.js"></script>
+<script>
+function doLogin(){
+  const email=document.getElementById("loginEmail").value.trim();
+  const pass=document.getElementById("loginPass").value.trim();
+  const msg=document.getElementById("msg");
+
+  if(email===""||pass===""){
+    msg.style.color="orange";
+    msg.innerText="Fill all fields";
+    return;
+  }
+
+  // demo only
+  userLogin(email);
+  msg.style.color="lightgreen";
+  msg.innerText="Login successful";
+
+  setTimeout(()=>{window.location.href="dashboard.html";},700);
+}
+</script>
+</body>
+</html>

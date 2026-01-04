@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Admin Login</title>
+
+<style>
+
+body{
+margin:0;
+height:100vh;
+display:flex;
+justify-content:center;
+align-items:center;
+font-family:Poppins,sans-serif;
+color:white;
+background:radial-gradient(circle at top ,#1f2937,#020617);
+overflow:hidden;
+}
+
+.bg{
+position:absolute;
+width:400px;
+height:400px;
+border-radius:50%;
+filter:blur(180px);
+}
+
+.b1{background:#2563eb;top:10%;left:10%;}
+.b2{background:#a855f7;bottom:10%;right:10%;}
+
+.box{
+z-index:10;
+width:380px;
+background:rgba(255,255,255,.1);
+border:1px solid rgba(255,255,255,.3);
+backdrop-filter:blur(18px);
+padding:25px;
+border-radius:16px;
+}
+
+input{
+width:100%;
+padding:10px;
+margin-top:10px;
+border-radius:10px;
+border:none;
+background:rgba(255,255,255,0.1);
+color:white;
+}
+
+button{
+margin-top:15px;
+padding:10px;
+width:100%;
+border-radius:10px;
+border:none;
+background:linear-gradient(45deg,#2563EB,#A855F7);
+color:white;
+cursor:pointer;
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="bg b1"></div>
+<div class="bg b2"></div>
+
+<div class="box">
+<h2>Admin Login</h2>
+
+<input id="email" type="email" placeholder="Admin Email">
+<input id="pass" type="password" placeholder="Password">
+
+<button onclick="login()">Login</button>
+
+<p id="msg"></p>
+</div>
+
+<script>
+function login(){
+let email=document.getElementById("email").value;
+let pass=document.getElementById("pass").value;
+let msg=document.getElementById("msg");
+
+if(email==="admin@gmail.com" && pass==="12345"){
+msg.style.color="lightgreen";
+msg.innerText="Login Success";
+setTimeout(()=> window.location.href="complaints.html",500);
+}else{
+msg.style.color="red";
+msg.innerText="Invalid Credentials";
+}
+}
+</script>
+
+</body>
+</html>

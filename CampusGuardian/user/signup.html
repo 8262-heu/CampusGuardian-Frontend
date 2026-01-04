@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Student Signup | Campus Guardian</title>
+  <link rel="stylesheet" href="../css/style.css">
+</head>
+<body class="auth-body">
+
+<div class="glow g1"></div>
+<div class="glow g2"></div>
+
+<div class="auth-box">
+  <h2>Create Student Account</h2>
+  <div class="auth-sub">Use your college email</div>
+
+  <input id="signupEmail" type="email" placeholder="College Email">
+  <input id="signupPass" type="password" placeholder="Password">
+
+  <button class="btn btn-primary" onclick="doSignup()">Signup</button>
+
+  <div id="msg" class="msg"></div>
+
+  <div class="auth-text">
+    Already have an account?
+    <span class="link" onclick="window.location.href='login.html'">Login</span>
+  </div>
+
+  <div class="auth-text">
+    <span class="link" onclick="window.location.href='../index.html'">⬅ Back to Home</span>
+  </div>
+</div>
+
+<script>
+function doSignup(){
+  const email=document.getElementById("signupEmail").value.trim();
+  const pass=document.getElementById("signupPass").value.trim();
+  const msg=document.getElementById("msg");
+
+  if(email===""||pass===""){
+    msg.style.color="orange";
+    msg.innerText="Fill all fields";
+    return;
+  }
+
+  msg.style.color="lightgreen";
+  msg.innerText="Account created (demo). Continue to login.";
+
+  setTimeout(()=>{window.location.href="login.html";},900);
+}
+</script>
+</body>
+</html>

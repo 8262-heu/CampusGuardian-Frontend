@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Campus Guardian</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;800&display=swap" rel="stylesheet">
+
+<style>
+*{margin:0;padding:0;box-sizing:border-box;font-family:Poppins,sans-serif;}
+
+body{
+background: radial-gradient(circle at 20% 20%, #111C44, #0A0F1F 60%);
+color:white;
+overflow-x:hidden;
+}
+
+/* GLOW EFFECT */
+.glow{
+position:absolute;
+width:400px;
+height:400px;
+filter:blur(180px);
+z-index:-1;
+}
+.glow1{background:#2563EB;top:10%;left:-10%;}
+.glow2{background:#A855F7;bottom:10%;right:-10%;}
+
+/* HEADER */
+.header{
+display:flex;
+justify-content:space-between;
+align-items:center;
+padding:25px 40px;
+}
+
+.logo{
+display:flex;
+align-items:center;
+gap:10px;
+font-size:22px;
+font-weight:700;
+}
+
+.logo-icon{
+width:40px;height:40px;
+border-radius:50%;
+display:flex;
+justify-content:center;
+align-items:center;
+font-weight:800;
+background:linear-gradient(45deg,#2563EB,#A855F7);
+}
+
+/* MENU BUTTON */
+.menu-btn{
+width:42px;height:42px;border-radius:50%;
+background:rgba(255,255,255,0.1);
+backdrop-filter:blur(10px);
+display:flex;justify-content:center;align-items:center;
+cursor:pointer;
+}
+
+/* SIDE MENU */
+.menu{
+position:fixed;
+top:0;right:-420px;
+width:420px;height:100%;
+background:rgba(10,15,30,0.9);
+backdrop-filter:blur(18px);
+border-left:1px solid rgba(255,255,255,0.2);
+transition:0.4s;
+padding:30px;
+z-index:50;
+overflow-y:auto;
+}
+
+.menu.open{right:0;}
+
+.menu h2{margin-bottom:10px;}
+
+.menu a{
+display:block;
+margin-top:12px;
+font-size:18px;
+color:white;
+text-decoration:none;
+opacity:.9;
+cursor:pointer;
+}
+.menu a:hover{color:#A855F7;}
+
+/* HERO */
+.hero{
+padding:90px 60px;
+max-width:900px;
+}
+
+.hero h1{
+font-size:48px;
+font-weight:800;
+line-height:1.2;
+}
+
+.hero h1 span{
+background:linear-gradient(45deg,#2563EB,#A855F7,#FF9800);
+-webkit-background-clip:text;
+color:transparent;
+}
+
+.hero p{
+margin-top:10px;
+opacity:.9;
+}
+
+.buttons{
+margin-top:30px;
+display:flex;
+gap:14px;
+}
+
+.btn{
+padding:12px 18px;
+border-radius:10px;
+border:none;
+cursor:pointer;
+font-size:16px;
+}
+
+.primary{
+background:linear-gradient(45deg,#2563EB,#A855F7);
+color:white;
+}
+.secondary{
+background:transparent;
+border:1px solid rgba(255,255,255,0.5);
+color:white;
+}
+
+/* ABOUT */
+.section{
+padding:70px 60px;
+}
+
+.box{
+background:rgba(255,255,255,0.1);
+padding:25px;
+border-radius:14px;
+border:1px solid rgba(255,255,255,0.2);
+backdrop-filter:blur(10px);
+}
+
+footer{
+text-align:center;
+padding:40px;
+opacity:.8;
+}
+</style>
+</head>
+
+<body>
+
+<div class="glow glow1"></div>
+<div class="glow glow2"></div>
+
+<!-- HEADER -->
+<div class="header">
+  <div class="logo">
+    <div class="logo-icon">CG</div>
+    Campus Guardian
+  </div>
+
+  <div class="menu-btn" onclick="toggleMenu()">☰</div>
+</div>
+
+<!-- SIDE MENU -->
+<div class="menu" id="menu">
+
+<h2>Navigation</h2>
+
+<!-- ✅ FIXED USER PATHS -->
+<a href="user/login.html">Login</a>
+<a href="user/signup.html">Signup</a>
+
+<a href="user/login.html">Submit Complaint</a>
+<a href="user/login.html">Track Complaint</a>
+
+<hr style="margin:20px 0;opacity:0.3">
+
+<a href="pages/about.html">About</a>
+<a href="pages/privacy.html">Privacy Policy</a>
+<a href="pages/contact.html">Contact</a>
+<a href="pages/terms.html">Terms</a>
+
+<hr style="margin:20px 0;opacity:0.3">
+
+<a href="admin/login.html" style="color:#FF6B6B">Admin Portal</a>
+
+</div>
+
+<!-- HERO -->
+<div class="hero">
+<h1>Your Voice.<br>Your Campus.<br><span>Now Protected.</span></h1>
+
+<p>
+Campus Guardian is a secure digital complaint management platform for students.
+Report issues safely, track progress transparently, and make campuses better.
+</p>
+
+<div class="buttons">
+  <!-- ✅ FORCE LOGIN FIRST -->
+  <button class="btn primary" onclick="window.location='user/login.html'">
+    Submit Complaint
+  </button>
+  <button class="btn secondary" onclick="window.location='user/login.html'">
+    Track Status
+  </button>
+</div>
+</div>
+
+<!-- ABOUT -->
+<div class="section">
+  <div class="box">
+    <h2>What is Campus Guardian?</h2>
+    <p>
+      A secure grievance and complaint system for colleges.
+      Built for transparency, safety, and accountability.
+    </p>
+  </div>
+</div>
+
+<footer>
+© 2025 Campus Guardian • Secure • Transparent • Student-First
+</footer>
+
+<script>
+function toggleMenu(){
+  document.getElementById("menu").classList.toggle("open");
+}
+</script>
+
+</body>
+</html>
